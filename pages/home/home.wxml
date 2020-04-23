@@ -1,0 +1,42 @@
+<!--pages/home/home.wxml-->
+<view class="home-container">
+	<!-- 搜索框 -->
+	<view class="search-link">
+    <image src="/assets/images/search_icon@2x.png"></image>
+    <text>请输入课程的名称</text>
+  </view>
+	<!-- 轮播图 -->
+	<swiper autoplay circular>
+		<navigator url="" wx:for="{{[1,2,3]}}" wx:key="*this">
+			<swiper-item>
+				<image src="http://127.0.0.1:3000/public/images/carousel/banner_01.png"></image>
+			</swiper-item>
+		</navigator>
+	</swiper>
+	<!-- 推荐课程 -->
+	<view>
+		<view class="tips">
+			<text class="tip">推荐课程</text>
+			<image src="/assets/images/arrow@2x.png" alt="" />
+		</view>
+		<scroll-view scroll-x class="course-container">
+			<navigator class="course-item" wx:for="[1,2,3]" wx:key="*this">
+				<image src="http://127.0.0.1:3000/public/images/recommend/recommend1.png" alt="" />
+			</navigator>
+		</scroll-view>
+	</view>
+	<!-- 热门视频 -->
+	<view>
+		<view class="tips">
+			<text class="tip">热门视频</text>
+			<image src="/assets/images/arrow@2x.png" alt="" />
+		</view>
+		<view class="hot-video">
+			<navigator url="" class="video-item" wx:for="{{[1,2,3,4]}}" wx:key="*this">
+				<image src="http://127.0.0.1:3000/public/images/hot_video/hot1.png" alt="" />
+				<text class="title"></text>
+				<text class="subtitle">451人已观看</text>
+			</navigator>
+		</view>
+	</view>
+</view>

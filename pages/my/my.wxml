@@ -1,0 +1,42 @@
+<view class="my-container">
+	<view class="header">
+		<image class="avatar" src="/assets/images/avatar@2x.png" alt="" />
+		<text class="nickname">酷小鱼</text>
+	</view>
+	<view class="tips">
+		<view class="left">
+			<text class="title">999</text>
+			<text class="subtitle">累计学习小时</text>
+		</view>
+		<view class="middle">
+			<text class="title">99</text>
+			<text class="subtitle">我的关注</text>
+		</view>
+		<view class="right">
+			<text class="title">9</text>
+			<text class="subtitle">我的课程</text>
+		</view>
+	</view>
+	<view class="cells">
+		<view class="cell">
+			<text>学习历史</text>
+			<image src="/assets/images/arrow@2x.png" alt="" />
+		</view>
+		<view class="cell">
+			<text>消息提醒</text>
+			<image src="/assets/images/arrow@2x.png" alt="" />
+		</view>
+		<view bindtap="clearCache" class="cell">
+			<text>清除缓存</text>
+			<image src="/assets/images/arrow@2x.png" alt="" />
+		</view>
+		<view class="cell">
+			<text>商务合作</text>
+			<image src="/assets/images/arrow@2x.png" alt="" />
+		</view>
+		<view bindtap="contact" class="cell">
+			<text>在线客服</text>
+			<image src="/assets/images/arrow@2x.png" alt="" />
+		</view>
+	</view>
+</view>
