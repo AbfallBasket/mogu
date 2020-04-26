@@ -1,6 +1,6 @@
 <!--pages/study/study.wxml-->
 <view class="study-container">
-	<view class="study-item" wx:for="{{[]}}" wx:key="{{item.sid}}">
+	<view class="study-item" wx:for="{{[1,2,3,4,5]}}" wx:key="{{item.sid}}">
 		<image src="{{item.icon}}" alt="" />
 		<view class="meta">
 			<text class="title">{{item.title}}</text>

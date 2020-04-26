@@ -1,23 +1,43 @@
+// pages/authorize/index.js
 import { apiSetLogin } from '../../utils/request'
-// pages/login/index.js
+
 Page({
 
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
 
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 查看是否授权
+    wx.getSetting({
+      success (res) {
+        if (res.authSetting['scope.userInfo']) {
+          wx.authorize({
+            scope: 'scope.userInfo',
+            success () {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+              wx.getUserInfo({
+                success: function (res) {
+                  console.log(res.userInfo)
+                  const {nickName, avatarUrl} = res.userInfo
+                  //  授权成功，则进行 登录请求然后跳转
+                  this.getAuthorize(nickName, avatarUrl)
+                }
+              })
+            }
+          })
 
+        }
+      }
+    })
+    console.log('加载authori页面')
   },
-  getUserInfo (e) {
-    console.log(e)
-    console.log('点击获取用户授权')
-
-    const {nickName, avatarUrl} = e.detail.userInfo
+  getAuthorize (nickName, avatarUrl) {
     // 发送 微信 登录 请求
     wx.login({
       async success (res) {
@@ -32,7 +52,7 @@ Page({
             nickName: nickName,
             avatarUrl: avatarUrl
           })
-          //  微信 登录 成功后 存储 token
+          //  微信 登录 成功后 存储 token ,跳转到我的页面
           wx.setStorageSync('token', token)
           wx.showToast({
             title: '微信授权登录成功'
@@ -47,7 +67,6 @@ Page({
         }
       }
     })
-
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

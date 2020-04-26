@@ -1,19 +1,19 @@
 <view class="my-container">
 	<view class="header">
-		<image class="avatar" src="/assets/images/avatar@2x.png" alt="" />
-		<text class="nickname">酷小鱼</text>
+		<image class="avatar" src="{{userInfo.avatar}}" alt="" />
+		<text class="nickname">{{userInfo.nickname}}</text>
 	</view>
 	<view class="tips">
 		<view class="left">
-			<text class="title">999</text>
+			<text class="title">{{userInfo.study_hour}}</text>
 			<text class="subtitle">累计学习小时</text>
 		</view>
 		<view class="middle">
-			<text class="title">99</text>
+			<text class="title">{{userInfo.follow_count}}</text>
 			<text class="subtitle">我的关注</text>
 		</view>
 		<view class="right">
-			<text class="title">9</text>
+			<text class="title">{{userInfo.course_count}}</text>
 			<text class="subtitle">我的课程</text>
 		</view>
 	</view>

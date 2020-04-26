@@ -1,10 +1,8 @@
 <view class="course-container">
-  <navigator url="" class="course-item" wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="*this">
-    <image src="http://127.0.0.1:3000/public/images/course/course2.png" alt="" />
-    <text class="title">前端开发</text>
-    <text class="subtitle">JavaScript</text>
-    <text class="level">初级</text>
-    <!-- <text class="level"">中级</text> -->
-    <!-- <text class="level"">高级</text> -->
-  </navigator>
+    <navigator url="" class="course-item" wx:for="{{courseList}}" wx:key="id">
+        <image src="{{item.icon}}" alt=""/>
+        <text class="title">{{item.title}}</text>
+        <text class="subtitle">{{item.subtitle}}</text>
+        <text class="level">{{levelArr[item.level]}}</text>
+    </navigator>
 </view>

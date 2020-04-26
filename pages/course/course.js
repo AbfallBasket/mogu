@@ -1,3 +1,5 @@
+import { request } from '../../utils/request'
+
 // pages/course/index.js
 Page({
 
@@ -5,14 +7,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    courseList: [],
+    levelArr: ['', '初级', '中级', '高级']
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: async function (options) {
+    //  页面一加载 获取 课程 列表信息
+    const courseList = await request({
+      url: '/api/course/list'
+    })
+    this.setData({
+      courseList
+    })
   },
 
   /**

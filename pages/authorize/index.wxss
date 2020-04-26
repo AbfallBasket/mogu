@@ -1,0 +1,22 @@
+/* pages/authorize/index.wxss */
+
+
+
+.authBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 80vh;
+}
+.authBox image{
+    width: 99px;
+    height: 99px;
+}
+.subtitle {
+    margin-top: 30rpx;
+    color: #a8a8a8;
+    font-size: 30rpx;
+    display: inline-block;
+}

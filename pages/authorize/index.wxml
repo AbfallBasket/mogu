@@ -1,0 +1,7 @@
+<!--pages/authorize/index.wxml-->
+
+<view class="authBox">
+    <button wx:if="{{canIUse}}" open-type="getUserInfo">授权登录</button>
+	<image src="../../assets/images/auth_tips@2x.png"></image>
+	<text class="subtitle">需要你的授权后才能继续使用</text>
+</view>

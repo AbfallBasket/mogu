@@ -1,3 +1,4 @@
+import { apiGetMyInfo } from '../../utils/request'
 // pages/my/index.js
 Page({
 
@@ -5,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    userInfo: {}
   },
 
   /**
@@ -14,7 +15,17 @@ Page({
   onLoad: function (options) {
 
   },
-
+  async getUserInfo (userToken) {
+    //  如果 token 存在 说明以 登录 则发送 请求获取个人信息
+    const data = await apiGetMyInfo({
+      url: '/api/my/info',
+      token: userToken
+    })
+    this.setData({
+      userInfo: data
+    })
+    console.log(data)
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -26,7 +37,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 一进入 页面 就 判断是否 存在 token,如不存在 说明未登录
 
+    console.log('欢迎来的我的页面!')
+    const userToken = wx.getStorageSync('token')
+    console.log(userToken)
+    if (userToken) {
+      console.log('token存在!')
+      this.getUserInfo(userToken)
+    } else {
+      console.log('token不存在,应该跳转')
+      //  如果 token 不存在 说明未登录 ,跳转到登录页面
+      wx.reLaunch({
+        url: '../login/index'
+      })
+      return false
+    }
   },
 
   /**

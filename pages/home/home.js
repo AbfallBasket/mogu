@@ -1,3 +1,4 @@
+import { request } from '../../utils/request'
 // pages/home/index.js
 Page({
 
@@ -5,14 +6,49 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 轮播图 数据
+    swiperList: [],
+    //  课程 数据
+    courseList: [],
+    //  热门视频
+    vedioList: []
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
 
+    this.getSwipers()
+    this.getetCourse()
+    this.getHotVideo()
+  },
+  async getSwipers () {
+    // 获取 轮播图 方法
+    const data = await request({
+      url: '/api/home/swipers'
+    })
+    this.setData({
+      swiperList: data
+    })
+
+  },
+  async getetCourse () {
+    //获取 课程 数据 方法
+    const data = await request({
+      url: '/api/home/course'
+    })
+    this.setData({
+      courseList: data
+    })
+  },
+  async getHotVideo () {
+    // 获取 热门视频 方法
+    const data = await request({
+      url: '/api/home/video'
+    })
+    this.setData({
+      vedioList: data
+    })
   },
 
   /**
