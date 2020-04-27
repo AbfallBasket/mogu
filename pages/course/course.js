@@ -16,11 +16,11 @@ Page({
    */
   onLoad: async function (options) {
     //  页面一加载 获取 课程 列表信息
-    const courseList = await request({
+    const data = await request({
       url: '/api/course/list'
     })
     this.setData({
-      courseList
+      courseList: data.message
     })
   },
 

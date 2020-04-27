@@ -1,4 +1,4 @@
-import { apiSetLogin } from '../../utils/request'
+import { request } from '../../utils/request'
 // pages/login/index.js
 Page({
 
@@ -25,15 +25,17 @@ Page({
           console.log(res)
           console.log(res.code)
           //发起网络请求
-          const token = await apiSetLogin({
-            url: '/api/user/wxlogin'
-          }, {
-            code: res.code,
-            nickName: nickName,
-            avatarUrl: avatarUrl
+          const data = await request({
+            url: '/api/user/wxlogin',
+            method: 'post',
+            data: {
+              code: res.code,
+              nickname: nickName,
+              avatar: avatarUrl
+            }
           })
           //  微信 登录 成功后 存储 token
-          wx.setStorageSync('token', token)
+          wx.setStorageSync('token', data.token)
           wx.showToast({
             title: '微信授权登录成功'
           })

@@ -28,7 +28,7 @@ Page({
       url: '/api/home/swipers'
     })
     this.setData({
-      swiperList: data
+      swiperList: data.message
     })
 
   },
@@ -38,7 +38,7 @@ Page({
       url: '/api/home/course'
     })
     this.setData({
-      courseList: data
+      courseList: data.message
     })
   },
   async getHotVideo () {
@@ -47,7 +47,7 @@ Page({
       url: '/api/home/video'
     })
     this.setData({
-      vedioList: data
+      vedioList: data.message
     })
   },
 

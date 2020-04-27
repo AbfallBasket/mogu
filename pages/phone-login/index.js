@@ -1,4 +1,4 @@
-import { apiGetPhoneCode, apiUserLogin } from '../../utils/request'
+import { request } from '../../utils/request'
 
 // pages/phone-login/index.js
 Page({
@@ -17,16 +17,6 @@ Page({
   },
   async getCode () {
     var timer
-    // 点击时 如果 isTimeLag 为 true 则说明还在计时
-    // 那么就不需要 执行后续代码
-    if (this.data.isTimeLag === true) {
-      console.log('你还在计时中,请计时完,再继续发送')
-      return false
-    }
-    this.setData({
-      isTimeLag: true
-    })
-
     const code = this.data.phoneCode
     //  发送 验证码之前,判断 手机号码 是否合法
     if (code.trim() === '') {
@@ -38,6 +28,16 @@ Page({
         return reg.test(code)
       }
       if (validatePhone(code)) {
+        // 点击时 如果 isTimeLag 为 true 则说明还在计时
+        // 那么就不需要 执行后续代码
+        if (this.data.isTimeLag === true) {
+          console.log('你还在计时中,请计时完,再继续发送')
+          return false
+        }
+        // 设置 开始计时
+        this.setData({
+          isTimeLag: true
+        })
 
         // 手机 合法 即可 开启定时器 ,并 发送验证码
         timer = setInterval(() => {
@@ -63,28 +63,35 @@ Page({
 
         //  说明手机号码正确 进行后续 获取验证码
         //  发送 请求 验证码的 方法
-        const userCode = await apiGetPhoneCode({
+        const data = await request({
           url: '/api/user/vcode',
-          code
+          data: {
+            phone: code
+          }
         })
-        console.log(userCode)
+        console.log(data)
         wx.showToast({
-          title: `您的验证码为:${userCode}`,
+          title: `您的验证码为:${data.vcode}`,
           icon: 'none',
           duration: 3000
-        })
-
-        //  把验证码 存储起来
-        this.setData({
-          vcode: userCode
         })
       } else {
         wx.showToast({
           title: '手机格式错误',
           icon: 'none'
         })
+        return false
       }
     }
+
+  },
+  getVcode (e) {
+    console.log(e)
+    // 失去焦点 时 把 验证码 存储到 data中
+    const {value} = e.detail
+    this.setData({
+      vcode: value
+    })
 
   },
   getPhoneNumber (e) {
@@ -100,16 +107,27 @@ Page({
   async phoneLogin () {
     //  点击 后 进行 手机号码 登录
     console.log('ddd点击 了登录')
+    // 判断 数据是否为空
+    if (this.data.phoneCode === '' || this.data.vcode === '') {
+      wx.showToast({
+        title: '请输入手机号或验证码后再登录',
+        icon: 'none'
+      })
+      return false
+    }
     // 发送 手机号码登录 的请求
-    const token = await apiUserLogin({
+    const data = await request({
       url: '/api/user/login',
-      phone: this.data.phoneCode,
-      code: this.data.vcode
+      method: 'post',
+      data: {
+        phone: this.data.phoneCode,
+        vcode: this.data.vcode
+      }
     })
     // 请求成功后, 获取 token  存储token
-    console.log(token)
+    console.log(data)
     //  微信 登录 成功后 存储 token
-    wx.setStorageSync('token', token)
+    wx.setStorageSync('token', data.token)
     wx.showToast({
       title: '手机验证登录成功',
       icon: 'success'

@@ -1,4 +1,4 @@
-import { apiGetMyInfo } from '../../utils/request'
+import { request } from '../../utils/request'
 // pages/my/index.js
 Page({
 
@@ -17,12 +17,17 @@ Page({
   },
   async getUserInfo (userToken) {
     //  如果 token 存在 说明以 登录 则发送 请求获取个人信息
-    const data = await apiGetMyInfo({
+    // if (!this.data.userInfo) {
+    const data = await request({
       url: '/api/my/info',
-      token: userToken
+      header: {
+        Authorization: userToken
+      }
     })
+    // }
+
     this.setData({
-      userInfo: data
+      userInfo: data.message
     })
     console.log(data)
   },
@@ -48,7 +53,7 @@ Page({
     } else {
       console.log('token不存在,应该跳转')
       //  如果 token 不存在 说明未登录 ,跳转到登录页面
-      wx.reLaunch({
+      wx.navigateTo({
         url: '../login/index'
       })
       return false
