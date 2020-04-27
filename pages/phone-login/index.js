@@ -8,7 +8,7 @@ Page({
    */
   data: {
     // 手机号码
-    phoneCode: '',
+    phoneNumber: '',
     // 验证码
     vcode: '',
     //  设置 每次点击 验证码 的间隔
@@ -17,7 +17,7 @@ Page({
   },
   async getCode () {
     var timer
-    const code = this.data.phoneCode
+    const code = this.data.phoneNumber
     //  发送 验证码之前,判断 手机号码 是否合法
     if (code.trim() === '') {
       return false
@@ -27,6 +27,7 @@ Page({
         const reg = /^1[3,4,5,6,7,8,9][0-9]{9}$/
         return reg.test(code)
       }
+
       if (validatePhone(code)) {
         // 点击时 如果 isTimeLag 为 true 则说明还在计时
         // 那么就不需要 执行后续代码
@@ -86,12 +87,27 @@ Page({
 
   },
   getVcode (e) {
+
     console.log(e)
     // 失去焦点 时 把 验证码 存储到 data中
     const {value} = e.detail
-    this.setData({
-      vcode: value
-    })
+
+    // 验证码是否 合法
+    const validateCode = (code) => {
+      const reg = /^\d{4,}$/
+      return reg.test(code)
+    }
+    if (validateCode(value)) {
+      this.setData({
+        vcode: value
+      })
+    } else {
+      wx.showToast({
+        title: '验证码格式错误',
+        icon: 'none'
+      })
+      return false
+    }
 
   },
   getPhoneNumber (e) {
@@ -100,7 +116,7 @@ Page({
     // 失去焦点 时 把 手机号码 存储到 data中
     const {value} = e.detail
     this.setData({
-      phoneCode: value
+      phoneNumber: value
     })
 
   },
@@ -108,7 +124,7 @@ Page({
     //  点击 后 进行 手机号码 登录
     console.log('ddd点击 了登录')
     // 判断 数据是否为空
-    if (this.data.phoneCode === '' || this.data.vcode === '') {
+    if (this.data.phoneNumber === '' || this.data.vcode === '') {
       wx.showToast({
         title: '请输入手机号或验证码后再登录',
         icon: 'none'
@@ -120,7 +136,7 @@ Page({
       url: '/api/user/login',
       method: 'post',
       data: {
-        phone: this.data.phoneCode,
+        phone: this.data.phoneNumber,
         vcode: this.data.vcode
       }
     })
@@ -129,13 +145,19 @@ Page({
     //  微信 登录 成功后 存储 token
     wx.setStorageSync('token', data.token)
     wx.showToast({
-      title: '手机验证登录成功',
-      icon: 'success'
+      title: data.message,
+      icon: 'success',
+      success () {
+        setTimeout(() => {
+          //  登录 成功 直接跳转到 my的页面
+          wx.switchTab({
+            url: '/pages/my/my'
+          })
+        }, 1000)
+
+      }
     })
-    //  登录 成功 直接跳转到 my的页面
-    wx.switchTab({
-      url: '/pages/my/my'
-    })
+
   },
   /**
    * 生命周期函数--监听页面加载

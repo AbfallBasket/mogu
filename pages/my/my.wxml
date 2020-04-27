@@ -1,6 +1,6 @@
 <view class="my-container">
 	<view class="header">
-		<image class="avatar" src="{{userInfo.avatar}}" alt="" />
+		<image class="avatar" src="{{userInfo.avatar?userInfo.avatar:'http://t.cn/A6AzAiJQ'}}" alt="" />
 		<text class="nickname">{{userInfo.nickname}}</text>
 	</view>
 	<view class="tips">

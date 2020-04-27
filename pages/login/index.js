@@ -17,6 +17,10 @@ Page({
     console.log(e)
     console.log('点击获取用户授权')
 
+    if (!e.detail.userInfo) {
+      console.log('用户点击拒绝,停止获取 授权')
+      return false
+    }
     const {nickName, avatarUrl} = e.detail.userInfo
     // 发送 微信 登录 请求
     wx.login({
@@ -37,13 +41,19 @@ Page({
           //  微信 登录 成功后 存储 token
           wx.setStorageSync('token', data.token)
           wx.showToast({
-            title: '微信授权登录成功'
+            title: data.message,
+            success () {
+              setTimeout(() => {
+                //  登录 成功 直接跳转到 my的页面
+                wx.switchTab({
+                  url: '/pages/my/my'
+                })
+                console.log('我跳转了')
+              }, 1000)
+
+            }
           })
-          //  登录 成功 直接跳转到 my的页面
-          wx.switchTab({
-            url: '/pages/my/my'
-          })
-          console.log('我跳转了')
+
         } else {
           console.log('登录失败！' + res.errMsg)
         }

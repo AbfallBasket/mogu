@@ -76,8 +76,11 @@ page {
     font-weight: 400;
 }
 
-.wx-login-btn, button:not([size='mini']) {
+.wx-btn, button:not([size='mini']) {
+    opacity: 0;
     width: 284px;
+    height: 49px;
+    position: absolute;
     margin-left: auto;
     margin-right: auto;
 }

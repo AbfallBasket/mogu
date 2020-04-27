@@ -5,10 +5,11 @@
 <text class="title">酷丁鱼在线课堂</text>
 <text class="desc">陪伴从心开始</text>
 
-<button class="wx-login-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+<view class="wx-login-btn">
     <image src="/assets/images/wx_icon@2x.png"></image>
     <text>微信授权登录</text>
-</button>
+    <button class="wx-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+</view>
 
 <navigator class="phone-login-link" url="/pages/phone-login/index">手机号码登录</navigator>
 

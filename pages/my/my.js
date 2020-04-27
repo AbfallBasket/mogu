@@ -16,16 +16,13 @@ Page({
 
   },
   async getUserInfo (userToken) {
-    //  如果 token 存在 说明以 登录 则发送 请求获取个人信息
-    // if (!this.data.userInfo) {
+    // 获取用户 信息
     const data = await request({
       url: '/api/my/info',
       header: {
         Authorization: userToken
       }
     })
-    // }
-
     this.setData({
       userInfo: data.message
     })
@@ -56,7 +53,6 @@ Page({
       wx.navigateTo({
         url: '../login/index'
       })
-      return false
     }
   },
 
